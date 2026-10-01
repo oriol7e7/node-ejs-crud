@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,26 +8,48 @@
     <link rel="stylesheet" type="text/css" href="/styles.css">
     <script defer>
         const deleteBook = async (id) => {
-    try {
-        const data = await fetch('http://localhost:3000/books/' + id, {
-            method: 'DELETE'
+            try {
+                const data = await fetch('http://localhost:3000/books/' + id, {
+                    method: 'DELETE'
+                })
+                window.location.reload();
+            } catch (e) {
+                console.log('no es pot borrar el llibre')
+            }
+        }
+        const createBook = async(book) => {
+            try {
+                const data = await fetch('http://localhost:3000/books', {
+                    method: 'POST',
+                    body: book,
+                })
+                window.location.reload();
+            } catch (e) {
+                console.log('no es pot crear el llibre')
+            }
+        }
+
+        document.addEventListener('click', async (e) => {
+            if (e.target.classList == 'eliminar') {
+                const id = e.target.id
+                await deleteBook(id)
+            }
+        });
+        const form = document.getElementById('createForm')
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            /*
+            "id":2,"name":"Padre rico, padre pobre","author":"Robert Kiyosaki","year":1997}
+            */
+            const book = {
+
+            }
+            await createBook(book);
         })
-        window.location.reload();
-    }catch(e) {
-        console.log('no es pot borrar el llibre')
-    }
-}
-
-
-document.addEventListener('click', async(e) => {
-    if (e.target.classList == 'eliminar') {
-        const id = e.target.id
-        await deleteBook(id)    
-    }
-});
     </script>
 </head>
-<body >
+
+<body>
     <header>
         <h1>Gestió de Llibres per <%= user.name %>!</h1>
     </header>
@@ -34,18 +57,20 @@ document.addEventListener('click', async(e) => {
         <section class="an">
             <h2>Llista de llibres</h2>
             <ul class="product-list">
-                <% books.forEach(b => { %>
+                <% books.forEach(b=> { %>
                     <li class="product-item">
-                        <strong><%= b.name %></strong>
+                        <strong>
+                            <%= b.name %>
+                        </strong>
                         <span>Autor: <%= b.author %></span>
                         <span>Any: <%= b.year %></span>
                         <button class="eliminar" id='<%= b.id %>'>Delete</button>
                     </li>
-                <% }) %>
+                    <% }) %>
             </ul>
         </section>
         <form id="createForm">
-            <h2>Crea un producte</h2>
+            <h2>Crea un llibre</h2>
             <label for="name">Nom</label>
             <input type="text" id="name" placeholder="El quixot">
             <label for="author">Autor</label>
@@ -56,4 +81,5 @@ document.addEventListener('click', async(e) => {
         </form>
     </main>
 </body>
+
 </html>

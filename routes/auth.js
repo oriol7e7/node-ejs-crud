@@ -15,7 +15,18 @@ router.post("/register", async (req, res) => {
   console.log(req.body);
   try {
     const id = await UserRepository.create({ username, password });
-    res.send({ id });
+    const token = jwt.sign({ id, username }, SECRET_JWT_KEY, {
+      expiresIn: "1h",
+    });
+
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 1000 * 60 * 60,
+      })
+      .send({ user: { _id: id, username }, token });
   } catch (error) {
     res.status(400).send(error.message);
   }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les meves pelicules</title>
+</head>
+<body>
+    <h1>Aqui tens les pelicules</h1>
+    <a href="/create-movie">Crear pel·lícula</a>
+    <% movies.forEach(m => { %>
+        <li class="game-item">
+            <strong><%= m.title %></strong>
+            <span>Autor: <%= m.author %></span>
+            <span>Any: <%= m.year %>€</span>
+            <a href="/movies/<%= m.id %>">Edita</a>
+            <form action="/movies/<%= m.id %>?_method=DELETE" method="POST">
+                <button type="submit">Esborra</button>
+            </form>
+        </li>
+    <% }) %>
+</body>
+<script>
+
+</script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Els meus jocs</title>
+</head>
+<body>
+    <h1>Aqui tens els jocs</h1>
+    <a href="/create-game">Crear joc</a>
+    <% games.forEach(g => { %>
+        <li class="game-item">
+            <strong><%= g.title %></strong>
+            <span>Creador: <%= g.author %></span>
+            <span>Any: <%= g.year %>€</span>
+            <a href="/games/<%= g.id %>">Edita</a>
+            <form action="/games/<%= g.id %>?_method=DELETE" method="POST">
+                <button type="submit">Esborra</button>
+            </form>
+        </li>
+    <% }) %>
+</body>
+<script>
+
+</script>
+</html>

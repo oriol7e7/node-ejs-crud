@@ -4,6 +4,9 @@ import bodyParser from "body-parser"; //Ho afegim per entendre que estem rebent 
 
 const router = express.Router();
 
+/**
+ * readData and writeData auxiliar functions using fs library to work with a .json file as a db
+ */
 const readData = () => {
   try {
     const data = fs.readFileSync("./db/db.json");
@@ -23,6 +26,11 @@ const writeData = (data) => {
   }
 };
 
+/**
+ * GET /movies
+ * LOG IN REQUIRED (checks req.session.user - middleware) - If not logged, renders no-permissions.ejs
+ * renders movies.ejs with all the movies
+ */
 router.get("/", (req, res) => {
   const data = readData();
   const movies = data.movies;
@@ -33,6 +41,11 @@ router.get("/", (req, res) => {
   res.render("movies", { movies });
 });
 
+/**
+ * GET /movies/create-movie
+ * LOG IN REQUIRED (checks req.session.user - middleware) - If not logged, renders no-permissions.ejs
+ * renders create_movie.ejs with form to post a movie
+ */
 router.get("/create-movie", (req, res) => {
   const user = req.session.user;
   if (!user) {
@@ -41,7 +54,11 @@ router.get("/create-movie", (req, res) => {
   res.render("create_movie");
 });
 
-// Obtenir un producte per id
+/**
+ * GET /movies/:id
+ * LOG IN REQUIRED (checks req.session.user - middleware) - If not logged, renders no-permissions.ejs
+ * renders edit_movies to view a concrete movie and edit it
+ */
 router.get("/:id", (req, res) => {
   const data = readData();
   const id = parseInt(req.params.id);
@@ -58,8 +75,17 @@ router.get("/:id", (req, res) => {
   res.render("edit_movies", { movie });
 });
 
-// Afegir un producte
+/**
+ * POST /movies
+ * LOG IN REQUIRED (checks req.session.user - middleware)
+ * Redirects back /movies
+ */
 router.post("/", (req, res) => {
+  const user = req.session.user;
+  if (!user) {
+    return res.status(401).send("no authorized");
+  }
+
   const data = readData();
   const body = req.body;
   const newMovie = {
@@ -71,8 +97,17 @@ router.post("/", (req, res) => {
   res.redirect("/movies");
 });
 
-// Modificar un producte
+/**
+ * PUT /movies/:id
+ * LOG IN REQUIRED (checks req.session.user - middleware)
+ * Redirects back /movies
+ */
 router.put("/:id", (req, res) => {
+  const user = req.session.user;
+  if (!user) {
+    return res.status(401).send("no authorized");
+  }
+
   const data = readData();
   const body = req.body;
   const id = parseInt(req.params.id);
@@ -90,8 +125,17 @@ router.put("/:id", (req, res) => {
   res.redirect("/movies");
 });
 
-// Eliminar un producte
+/**
+ * DELETE /movies/:id
+ * LOG IN REQUIRED (checks req.session.user - middleware)
+ * Redirects back /movies
+ */
 router.delete("/:id", (req, res) => {
+  const user = req.session.user;
+  if (!user) {
+    return res.status(401).send("no authorized");
+  }
+
   const data = readData();
   const id = parseInt(req.params.id);
   const movieIndex = data.movies.findIndex((movie) => movie.id === id);

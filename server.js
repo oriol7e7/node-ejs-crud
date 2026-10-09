@@ -18,7 +18,7 @@ app.set("view engine", "ejs"); // ejs usage
 app.set("views", "./views"); // ejs path
 
 /**
- * MIDDLEWARE
+ * MIDDLEWARE to store in req.session the current user (or not if there's not any user logged)
  */
 app.use((req, res, next) => {
   const { access_token } = req.cookies;
@@ -31,11 +31,12 @@ app.use((req, res, next) => {
   }
   next();
 });
-//Game routes (passed middleware)
+//Games, movies and auth routes (passed middleware)
 app.use("/games", gamesRoutes);
 app.use("/movies", moviesRoutes);
 app.use("/auth", authRoutes);
 
+//Render home.ejs view in http://localhost/
 app.get("/", (req, res) => {
   res.render("home");
 });

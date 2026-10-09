@@ -5,10 +5,28 @@ import { UserRepository } from "../user-repository.js";
 import { PORT, SECRET_JWT_KEY, SALT_ROUNDS } from "../config.js";
 import jwt from "jsonwebtoken";
 const router = express.Router();
+
+/**
+ * GET /auth
+ * Renders login.ejs with forms to login and register users
+ */
 router.get("/", (req, res) => {
   res.render("login");
 });
 
+/**
+ * GET /auth/protected
+ * Checks if user exists using req.session.user (gotten from middleware) and renders protected.ejs or no-permissions.ejs
+ */
+router.get("/protected", (req, res) => {
+  const user = req.session.user;
+  user ? res.render("protected") : res.render("no-permissions");
+});
+
+/**
+ * POST /auth/register
+ * Registers an user innto User.json and creates a cookie with the JWT
+ */
 router.post("/register", async (req, res) => {
   //destructuring request body
   const { username, password } = req.body;
@@ -32,6 +50,10 @@ router.post("/register", async (req, res) => {
   }
 });
 
+/**
+ * POST /auth/login
+ * Logs a user by creating a JWT and a cookie
+ */
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -58,11 +80,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/protected", (req, res) => {
-  const user = req.session.user;
-  user ? res.render("protected") : res.render("no-permissions");
-});
-
+/**
+ * POST /auth/logout
+ * Logs out a user by deleting token cookie and renders home.ejs back
+ */
 router.post("/logout", (req, res) => {
   res.clearCookie("access_token").render("home");
 });

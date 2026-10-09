@@ -4,21 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les meves pelicules</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1>Aqui tens les pelicules</h1>
-    <a href="/create-movie">Crear pel·lícula</a>
-    <% movies.forEach(m => { %>
-        <li class="game-item">
-            <strong><%= m.title %></strong>
-            <span>Autor: <%= m.author %></span>
-            <span>Any: <%= m.year %>€</span>
-            <a href="/movies/<%= m.id %>">Edita</a>
-            <form action="/movies/<%= m.id %>?_method=DELETE" method="POST">
-                <button type="submit">Esborra</button>
-            </form>
-        </li>
-    <% }) %>
+    <div class="page">
+        <header class="page-header">
+            <p class="eyebrow">Pel·lícules</p>
+            <h1>Aqui tens les pelicules</h1>
+        </header>
+        <div class="toolbar">
+            <a class="btn" href="/movies/create-movie">Crear pel·lícula</a>
+        </div>
+        <ul class="list">
+            <% movies.forEach(m => { %>
+                <li class="game-item">
+                    <strong><%= m.title %></strong>
+                    <span>Autor: <%= m.author %></span>
+                    <span>Any: <%= m.year %>€</span>
+                    <a href="/movies/<%= m.id %>">Edita</a>
+                    <form action="/movies/<%= m.id %>?_method=DELETE" method="POST">
+                        <button type="submit">Esborra</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
 </body>
 <script>
 

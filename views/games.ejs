@@ -4,21 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Els meus jocs</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1>Aqui tens els jocs</h1>
-    <a href="/create-game">Crear joc</a>
-    <% games.forEach(g => { %>
-        <li class="game-item">
-            <strong><%= g.title %></strong>
-            <span>Creador: <%= g.author %></span>
-            <span>Any: <%= g.year %>€</span>
-            <a href="/games/<%= g.id %>">Edita</a>
-            <form action="/games/<%= g.id %>?_method=DELETE" method="POST">
-                <button type="submit">Esborra</button>
-            </form>
-        </li>
-    <% }) %>
+    <div class="page">
+        <header class="page-header">
+            <p class="eyebrow">Jocs</p>
+            <h1>Aqui tens els jocs</h1>
+        </header>
+        <div class="toolbar">
+            <a class="btn" href="/games/create-game">Crear joc</a>
+        </div>
+        <ul class="list">
+            <% games.forEach(g => { %>
+                <li class="game-item">
+                    <strong><%= g.title %></strong>
+                    <span>Creador: <%= g.author %></span>
+                    <span>Any: <%= g.year %>€</span>
+                    <a href="/games/<%= g.id %>">Edita</a>
+                    <form action="/games/<%= g.id %>?_method=DELETE" method="POST">
+                        <button type="submit">Esborra</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
 </body>
 <script>
 

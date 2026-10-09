@@ -64,7 +64,7 @@ router.get("/protected", (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  res.clearCookie("access_token").json({ message: "logout successfull" });
+  res.clearCookie("access_token").render("home");
 });
 
 export default router;

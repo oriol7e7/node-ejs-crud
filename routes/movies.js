@@ -45,15 +45,17 @@ router.get("/create-movie", (req, res) => {
 router.get("/:id", (req, res) => {
   const data = readData();
   const id = parseInt(req.params.id);
-  const movie = data.movies.find((movies) => movies.id === id);
+  const movie = data.movies.find((m) => m.id === id);
   const user = req.session.user;
+
   if (!user) {
     return res.render("no-permissions");
   }
+
   if (!movie) {
-    return res.send("Pelicula no trobada");
+    return res.status(404).send("Pelicula no trobada");
   }
-  res.redirect("/movies");
+  res.render("edit_movies", { movie });
 });
 
 // Afegir un producte
@@ -66,7 +68,7 @@ router.post("/", (req, res) => {
   };
   data.movies.push(newMovie);
   writeData(data);
-  res.json(newMovie);
+  res.redirect("/movies");
 });
 
 // Modificar un producte

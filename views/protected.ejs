@@ -4,13 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Protegit</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1>PROTECTED PAGE</h1>
-    <a href="/games">Jocs</a>
-    <a href="/movies">Pel·lícules</a>
-    <form action="/auth/logout" method="POST">
-        <button type="submit">Logout</button>
-    </form>
+    <div class="page">
+        <header class="page-header">
+            <p class="eyebrow">Administració</p>
+            <h1>PROTECTED PAGE</h1>
+        </header>
+        <nav class="toolbar">
+            <a class="btn" href="/games">Jocs</a>
+            <a class="btn btn-secondary" href="/movies">Pel·lícules</a>
+            <form action="/auth/logout" method="POST" class="logout-form">
+                <button type="submit">Logout</button>
+            </form>
+        </nav>
+    </div>
 </body>
 </html>

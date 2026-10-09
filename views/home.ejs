@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1>MEGA - CRUD AMB NODE</h1>
-    <p>Has d'iniciar sessió per accedir al panell de control</p>
-    <div class="controls">
-        <button> <a href="/auth/protected">Panell de control</a></button>
-        <button> <a href="/auth">Inicia sessió</a></button>
+    <div class="page">
+        <header class="page-header">
+            <p class="eyebrow">Dashboard</p>
+            <h1>MEGA - CRUD AMB NODE</h1>
+        </header>
+        <p>Has d'iniciar sessió per accedir al panell de control</p>
+        <div class="toolbar">
+            <a class="btn" href="/auth/protected">Panell de control</a>
+            <a class="btn btn-secondary" href="/auth">Inicia sessió</a>
+        </div>
     </div>
 </body>
 </html>

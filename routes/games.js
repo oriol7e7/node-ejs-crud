@@ -92,7 +92,7 @@ router.post("/", (req, res) => {
   };
   data.games.push(newGame);
   writeData(data);
-  res.redirect("/games");
+  res.redirect(303, "/games");
 });
 
 /**
@@ -120,7 +120,7 @@ router.put("/:id", (req, res) => {
     ...body,
   };
   writeData(data);
-  res.redirect("/games");
+  res.redirect(303, "/games");
 });
 
 /**
@@ -144,7 +144,7 @@ router.delete("/:id", (req, res) => {
 
   data.games.splice(gameIndex, 1);
   writeData(data);
-  res.redirect("/games");
+  res.redirect(303, "/games");
 });
 
 export default router;

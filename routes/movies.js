@@ -94,7 +94,7 @@ router.post("/", (req, res) => {
   };
   data.movies.push(newMovie);
   writeData(data);
-  res.redirect("/movies");
+  res.redirect(303, "/movies");
 });
 
 /**
@@ -122,7 +122,7 @@ router.put("/:id", (req, res) => {
     ...body,
   };
   writeData(data);
-  res.redirect("/movies");
+  res.redirect(303, "/movies");
 });
 
 /**
@@ -146,7 +146,7 @@ router.delete("/:id", (req, res) => {
 
   data.movies.splice(movieIndex, 1);
   writeData(data);
-  res.redirect("/movies");
+  res.redirect(303, "/movies");
 });
 
 export default router;
